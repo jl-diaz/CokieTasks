@@ -1,42 +1,73 @@
-# Cokie Tasks — Gestor Estudiantil & Pausa Activa
+# Cokie Tasks — Plataforma de Gestión y Productividad Estudiantil
 
-Aplicación web desarrollada para cumplir con todos los requerimientos de la actividad de JavaScript, manipulación del DOM, eventos y validación de formularios, con diseño moderno, responsivo y la recreación fiel del minijuego **Cokie Astronauta** (Easter-Egg del proyecto original *Cokie College*).
-
----
-
-## 📋 Cumplimiento de Requerimientos de la Actividad
-
-| Requerimiento | Implementación en el Proyecto | Ubicación en el Código |
-| :--- | :--- | :--- |
-| **HTML y CSS para estructura y diseño** | HTML5 semántico (`<header>`, `<nav>`, `<main>`, `<section>`, etc.) estilizado con **Tailwind CSS** y **CSS personalizado** (`styles.css`), fuentes *Outfit* y *Plus Jakarta Sans*, paleta de marca y diseño 100% responsivo para móviles, tablets y desktop. | `index.html`<br>`css/styles.css` |
-| **JavaScript no intrusivo** | Ningún atributo `onclick`, `onchange` o `onsubmit` en el HTML. Todo el comportamiento se conecta mediante `addEventListener` en módulos ES6 independientes. | `js/app.js`<br>`js/tasks.js`<br>`js/validator.js`<br>`js/game.js` |
-| **Manipulación del DOM: Agregar** | Se crean dinámicamente nuevos elementos `<li>` en la lista de tareas con badges de categoría, fecha, checkbox y botones de acción, usando `document.createElement`, `prepend` y animaciones suaves. | `js/tasks.js` (`addTask`) |
-| **Manipulación del DOM: Modificar** | 1. Marcado de completado modificando clases y estilos (`line-through`, opacidad).<br>2. Edición in-situ del texto de la tarea mediante inyección dinámica de un `<input>` de edición y botón de guardar.<br>3. Actualización dinámica del carnet del estudiante con los datos validados. | `js/tasks.js` (`toggleTaskComplete`, `startInlineEdit`)<br>`js/validator.js` |
-| **Manipulación del DOM: Eliminar** | 1. Eliminación individual de nodos con animación de salida (`.task-leave`) y método `.remove()`.<br>2. Botón para eliminar en masa todas las tareas completadas.<br>3. Eliminación y reciclado dinámico de obstáculos en el juego. | `js/tasks.js` (`deleteTask`, `clearCompletedBtn`)<br>`js/game.js` |
-| **Uso de múltiples eventos** | • `click`: Botones de agregar, editar, eliminar, limpiar, salto en el juego.<br>• `change`: Checkbox de estado, selector de categoría, filtro de tareas, selector de carrera.<br>• `keyup` / `input`: Validación en tiempo real, Enter para enviar tarea, medidor de fuerza de contraseña, buscador en vivo.<br>• `blur`: Validación al perder el foco.<br>• `submit`: Envío del formulario interceptado con `e.preventDefault()`.<br>• `keydown` / `touchstart`: Controles del juego para desktop y pantallas táctiles. | Toda la carpeta `js/` |
-| **Validación de formulario (≥ 3 campos)** | Formulario de Registro Estudiantil con 4 campos:<br>1. **Nombre completo**: Mínimo 3 caracteres, solo letras y espacios.<br>2. **Correo universitario**: Formato estándar de email verificado con regex.<br>3. **Contraseña**: Mínimo 8 caracteres, combinación alfanumérica y medidor reactivo de seguridad.<br>4. **Carrera / Especialidad**: Selector con evento `change`. | `js/validator.js` |
-| **Funcionalidad extra de libre elección** | **Minijuego Cokie Astronauta**: Recreación exacta del Easter-Egg de *Cokie College*, con el astronauta canino (`CokieAstronauta.png`), fondo estelar (`GalaxyBG.jpg`), tubos con barras energéticas sci-fi, físicas de gravedad/salto con DeltaTime a 60FPS. Cumple la instrucción de **mostrar únicamente la puntuación final sin almacenar récord**. | `js/game.js` |
+Plataforma web de productividad y bienestar universitario desarrollada con arquitectura modular en JavaScript vainilla (ES6), maquetación responsiva con Tailwind CSS y un simulador arcade integrado para pausas activas.
 
 ---
 
-## 🚀 Cómo Ejecutar la Aplicación
+## 🏛️ Flujo de Usuario y Control de Acceso (Onboarding Gate)
 
-1. Navega a la carpeta del proyecto:
-   ```bash
-   cd d:\Portafolio\Proyectos\Cokie_Tasks
-   ```
-2. Puedes abrir directamente el archivo `index.html` en cualquier navegador web moderno (Chrome, Edge, Firefox, Safari), o servirlo mediante una extensión como Live Server o un servidor local:
-   ```bash
-   # Opción con Python:
-   python -m http.server 3000
-   ```
-3. Accede a `http://localhost:3000` en tu navegador.
+La aplicación implementa un flujo de acceso secuencial y persistente:
+
+1. **Acceso Inicial / Registro Obligatorio:**  
+   Al ingresar por primera vez o con sesión cerrada, la pantalla de inicio presenta la **Ficha de Registro Estudiantil**. Las pestañas de *Mis Tareas* y *Cokie Astronauta* permanecen bloqueadas (con indicador de candado y estado inactivo).
+2. **Validación y Desbloqueo Automático:**  
+   Al completar la validación de los campos obligatorios (nombre, correo universitario, contraseña alfanumérica y carrera), se activa la credencial del estudiante, se desbloquean todas las funcionalidades y el sistema redirige automáticamente al **Gestor de Tareas** con un saludo personalizado.
+3. **Edición del Perfil Estudiantil:**  
+   Desde la pestaña *Mi Perfil*, el usuario puede consultar su credencial digital y hacer clic en **Editar Información** para modificar su nombre, correo institucional, facultad o actualizar su contraseña, sincronizando los cambios en toda la interfaz (carnet, cabecera y saludo).
+4. **Cierre de Sesión:**  
+   Disponible tanto en la cabecera como en la credencial digital. Al cerrar sesión, se revoca el acceso a las tareas y al minijuego, regresando inmediatamente a la vista de **Registro Estudiantil**.
 
 ---
 
-## 🎨 Aspectos de Diseño (`ui-ux-pro-max`)
+## 📁 Estructura del Código
 
-- **Tipografía**: Jerarquía cuidada combinando `Outfit` (titulares y números de gran peso visual) y `Plus Jakarta Sans` (lectura cómoda y profesional).
-- **Iconografía**: Iconos vectoriales SVG puros (Heroicons/Lucide); se evitó el uso de emojis como iconos estructurales.
-- **Microinteracciones**: Transiciones de 150-250ms, feedback de pulsación, efectos de foco visibles y accesibles para teclado.
-- **Paleta de Color**: Azul marino institucional (`#0B1956`), Amarillo soleado (`#F6BE2F`), Cian energético (`#38BDF8`), sobre fondos suaves neutros (`#F8FAFC`, `#FFFFFF`).
+```text
+CokieTasks/
+├── index.html            # Interfaz de usuario semántica y accesible (HTML5 / Tailwind CSS)
+├── assets/               # Recursos gráficos optimizados (sprites, texturas, branding)
+├── css/
+│   └── styles.css        # Variables de diseño, tipografías y estilos del motor arcade
+└── js/
+    ├── app.js            # Orquestador central, control de acceso y navegación reactiva
+    ├── tasks.js          # Módulo de gestión del ciclo de vida de tareas y sincronización de estado
+    ├── validator.js      # Motor de autenticación, validación, edición de perfil y logout
+    └── game.js           # Motor del minijuego con física integrada y renderizado a 60 FPS
+```
+
+---
+
+## ✨ Módulos y Funcionalidades
+
+### 1. Autenticación y Perfil (`validator.js`)
+- **Validación en tiempo real:** Control de nombres alfabéticos, formato estricto de correo electrónico y medidor reactivo de entropía de contraseñas.
+- **Modo Edición In-Situ:** Formulario dinámico bidireccional que permite alternar entre visualización de credencial y edición de datos.
+- **Persistencia de sesión:** Almacenamiento seguro del estado de sesión local para preservar la experiencia del usuario entre recargas.
+
+### 2. Tablero de Actividades Estudiantiles (`tasks.js`)
+- **Gestión reactiva de elementos:** Inserción de nuevas tareas con categorización cromática, marca de tiempo y animaciones de entrada.
+- **Edición en línea:** Modificación del texto de cualquier tarea mediante inyección de un input temporal.
+- **Transiciones de estado:** Conmutación de tareas completadas/pendientes con ajuste dinámico de contadores de productividad.
+- **Búsqueda y filtrado continuo:** Búsqueda en tiempo real por texto y filtrado por estado (`Todas`, `Pendientes`, `Completadas`).
+- **Eliminación y limpieza:** Depuración individual y en lote de actividades con transiciones de salida.
+
+### 3. Simulador Arcade Cokie Astronauta (`game.js`)
+- **Motor físico normalizado:** Implementación de ciclo de juego a 60 FPS con DeltaTime para garantizar consistencia en pantallas de cualquier tasa de refresco.
+- **Física y detección de colisiones:** Modelo de gravedad e impulso vertical con detección de colisiones AABB con márgenes de tolerancia.
+- **Control adaptativo:** Soporte completo para teclado (<kbd>Espacio</kbd> / <kbd>↑</kbd>), puntero y eventos táctiles en dispositivos móviles.
+- **Marcador de sesión:** Despliegue de puntuación en tiempo real y pantalla de fin de partida (mostrando puntaje final).
+
+---
+
+## 🚀 Despliegue y Ejecución Local
+
+Para ejecutar el proyecto de forma local:
+
+```bash
+cd D:\Portafolio\Proyectos\CokieTasks
+python -m http.server 3000
+```
+
+Luego abre en tu navegador:
+```text
+http://localhost:3000
+```

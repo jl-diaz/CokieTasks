@@ -30,7 +30,7 @@ h1, h2, h3, h4, .font-heading {
   border-color: #CBD5E1;
 }
 
-/* Animaciones para manipulación del DOM */
+/* Microinteracciones y transiciones de elementos */
 @keyframes taskSlideIn {
   from {
     opacity: 0;
@@ -69,7 +69,7 @@ h1, h2, h3, h4, .font-heading {
   pointer-events: none;
 }
 
-/* Estados de validación de formulario */
+/* Estados de validación de campos */
 .input-valid {
   border-color: #10B981 !important;
   background-color: #F0FDF4;
@@ -80,14 +80,13 @@ h1, h2, h3, h4, .font-heading {
   background-color: #FEF2F2;
 }
 
-/* Indicador de fuerza de contraseña */
+/* Indicador de entropía de contraseña */
 .strength-meter-bar {
   transition: width 0.3s ease, background-color 0.3s ease;
 }
 
 /* -------------------------------------------------------------
-   ESTILOS EXACTOS DEL EASTER EGG COKIE ASTRONAUTA
-   (Adaptado fielmente de Cokie_College easter-egg.jsx)
+   SIMULADOR ARCADE COKIE ASTRONAUTA
 ------------------------------------------------------------- */
 #game-arena {
   position: relative;
