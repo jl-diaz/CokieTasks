@@ -1,0 +1,227 @@
+@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@500;600;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap');
+
+:root {
+  --cokie-navy: #0B1956;
+  --cokie-navy-dark: #071038;
+  --cokie-navy-light: #162B7D;
+  --cokie-yellow: #F6BE2F;
+  --cokie-yellow-hover: #E5AC18;
+  --font-heading: 'Outfit', -apple-system, BlinkMacSystemFont, sans-serif;
+  --font-body: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+}
+
+body {
+  font-family: var(--font-body);
+  background-color: #F8FAFC;
+  color: #1E293B;
+  -webkit-font-smoothing: antialiased;
+}
+
+h1, h2, h3, h4, .font-heading {
+  font-family: var(--font-heading);
+}
+
+/* Transiciones suaves y efectos de elevación */
+.smooth-card {
+  transition: transform 0.2s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.2s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.2s ease;
+}
+
+.smooth-card:hover {
+  border-color: #CBD5E1;
+}
+
+/* Animaciones para manipulación del DOM */
+@keyframes taskSlideIn {
+  from {
+    opacity: 0;
+    transform: translateY(-10px) scale(0.98);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+@keyframes taskSlideOut {
+  from {
+    opacity: 1;
+    transform: translateX(0) scale(1);
+    max-height: 120px;
+  }
+  to {
+    opacity: 0;
+    transform: translateX(20px) scale(0.95);
+    max-height: 0;
+    padding-top: 0;
+    padding-bottom: 0;
+    margin-top: 0;
+    margin-bottom: 0;
+  }
+}
+
+.task-enter {
+  animation: taskSlideIn 0.25s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+.task-leave {
+  animation: taskSlideOut 0.25s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  overflow: hidden;
+  pointer-events: none;
+}
+
+/* Estados de validación de formulario */
+.input-valid {
+  border-color: #10B981 !important;
+  background-color: #F0FDF4;
+}
+
+.input-invalid {
+  border-color: #EF4444 !important;
+  background-color: #FEF2F2;
+}
+
+/* Indicador de fuerza de contraseña */
+.strength-meter-bar {
+  transition: width 0.3s ease, background-color 0.3s ease;
+}
+
+/* -------------------------------------------------------------
+   ESTILOS EXACTOS DEL EASTER EGG COKIE ASTRONAUTA
+   (Adaptado fielmente de Cokie_College easter-egg.jsx)
+------------------------------------------------------------- */
+#game-arena {
+  position: relative;
+  width: 100%;
+  height: 520px;
+  background-color: #050515;
+  background-image: url('../assets/GalaxyBG.jpg');
+  background-size: cover;
+  background-position: center;
+  overflow: hidden;
+  user-select: none;
+  -webkit-user-select: none;
+  cursor: pointer;
+  border-radius: 1rem;
+}
+
+#game-bird {
+  position: absolute;
+  width: 54px;
+  height: 52px;
+  z-index: 20;
+  transform-origin: center center;
+  pointer-events: none;
+  will-change: transform, top;
+}
+
+/* Obstáculos espaciales con barras de energía sci-fi */
+.game-pipe {
+  position: absolute;
+  width: 70px;
+  background-color: rgba(15, 23, 42, 0.92);
+  border: 2.5px solid #38bdf8;
+  border-radius: 8px;
+  box-shadow: 0 0 10px rgba(56, 189, 248, 0.45);
+  overflow: hidden;
+  z-index: 10;
+  pointer-events: none;
+}
+
+.game-pipe-top {
+  top: 0;
+  border-top-width: 0;
+  border-top-left-radius: 0;
+  border-top-right-radius: 0;
+}
+
+.game-pipe-bottom {
+  bottom: 0;
+  border-bottom-width: 0;
+  border-bottom-left-radius: 0;
+  border-bottom-right-radius: 0;
+}
+
+.game-pipe-energy {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 2px;
+  background-color: rgba(56, 189, 248, 0.5);
+  box-shadow: 0 0 4px #38bdf8;
+}
+
+.game-pipe-cap {
+  position: absolute;
+  left: 0;
+  right: 0;
+  height: 7px;
+  background-color: #38bdf8;
+  box-shadow: 0 0 8px #00f5ff;
+}
+
+.game-pipe-cap-bottom {
+  bottom: 0;
+}
+
+.game-pipe-cap-top {
+  top: 0;
+}
+
+/* Marcador flotante de puntuación */
+#game-score-display {
+  position: absolute;
+  top: 24px;
+  left: 50%;
+  transform: translateX(-50%);
+  font-family: var(--font-heading);
+  font-size: 3.5rem;
+  font-weight: 800;
+  color: #FFFFFF;
+  text-shadow: 0 3px 8px rgba(0, 0, 0, 0.8), 0 0 16px rgba(56, 189, 248, 0.5);
+  z-index: 30;
+  pointer-events: none;
+}
+
+/* Overlays de inicio y Game Over */
+.game-overlay {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  z-index: 40;
+  padding: 1.5rem;
+}
+
+.game-start-banner {
+  background: rgba(15, 23, 42, 0.85);
+  border: 1px solid rgba(255, 255, 255, 0.25);
+  backdrop-filter: blur(8px);
+  padding: 1rem 1.75rem;
+  border-radius: 1rem;
+  box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.5);
+  text-align: center;
+  animation: pulseStart 2s infinite ease-in-out;
+}
+
+@keyframes pulseStart {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.03); }
+}
+
+.game-over-backdrop {
+  background-color: rgba(0, 0, 0, 0.78);
+  backdrop-filter: blur(6px);
+}
+
+.game-scoreboard {
+  background: rgba(255, 255, 255, 0.12);
+  border: 1px solid rgba(255, 255, 255, 0.25);
+  border-radius: 1.25rem;
+  padding: 1.75rem 2.25rem;
+  text-align: center;
+  box-shadow: 0 20px 30px rgba(0, 0, 0, 0.4);
+}
